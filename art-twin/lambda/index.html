@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Art Twin</title>
+<style>
+:root{--wall:#243a33;--wall2:#1b2d28;--gold:#b8963f;--card:#efe9d8;--ink:#2a2520}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,var(--wall),var(--wall2));color:#f1ecdd;font-family:Georgia,'Times New Roman',serif;text-align:center;padding:40px 18px 60px}
+h1{font-size:clamp(2rem,6vw,3.4rem);font-weight:400;margin:0 0 .4rem;letter-spacing:.01em}
+p.sub{margin:0 auto 1.6rem;max-width:34rem;line-height:1.6;opacity:.85}
+label.btn{display:inline-block;background:var(--gold);color:#1d1a12;padding:.85rem 1.6rem;border-radius:3px;font:600 1rem system-ui,sans-serif;cursor:pointer}
+label.btn:focus-within,label.btn:hover{outline:3px solid #f1ecdd;outline-offset:3px}
+input{position:absolute;opacity:0;width:1px;height:1px}
+#msg{margin:1.6rem 0 1rem;min-height:1.5rem;font-style:italic}
+.top{max-width:420px;margin:0 auto}
+.frame{border:14px solid var(--gold);box-shadow:0 0 0 2px #7a6226 inset,0 18px 40px #0008;background:#111}
+.frame img{display:block;width:100%}
+.plaque{background:var(--card);color:var(--ink);padding:.9rem 1.1rem;margin:1.2rem auto 0;text-align:left;line-height:1.45}
+.plaque b{display:block;font-size:1.1rem}
+.plaque small{font:.85rem system-ui,sans-serif;color:#5b5346}
+.more{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:2.2rem}
+.more .top{width:200px;margin:0}.more .frame{border-width:8px}.more .plaque{font-size:.85rem;padding:.6rem .8rem}
+a{color:inherit}
+</style></head><body>
+<h1>Which painting do you look like?</h1>
+<p class="sub">Take a selfie and we will search a museum's portraits for your closest face. Your photo is not saved.</p>
+<label class="btn">Take or choose a photo<input id="f" type="file" accept="image/*" capture="user"></label>
+<div id="msg"></div><div id="out"></div>
+<script>
+const $=id=>document.getElementById(id);
+function card(m,cls){const d=document.createElement('div');d.className=cls;
+ d.innerHTML='<div class="frame"><img alt=""></div><div class="plaque"><b></b><small></small></div>';
+ d.querySelector('img').src=m.image;d.querySelector('img').alt=m.title;
+ d.querySelector('b').textContent=m.title;
+ const s=d.querySelector('small');s.append((m.artist||'Unknown artist')+', '+(m.date||'n.d.')+' | face similarity '+m.similarity+'% | ');
+ const a=document.createElement('a');a.href=m.url;a.target='_blank';a.rel='noopener';a.textContent='See it at The Met';s.append(a);return d}
+$('f').onchange=async e=>{
+ const file=e.target.files[0];if(!file)return;$('out').innerHTML='';$('msg').textContent='Searching the galleries...';
+ try{const im=await createImageBitmap(file);const k=Math.min(1,800/Math.max(im.width,im.height));
+  const c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+  const r=await fetch(location.href,{method:'POST',body:JSON.stringify({image:c.toDataURL('image/jpeg',.85)})});
+  const d=await r.json();if(d.error){$('msg').textContent=d.error;return}
+  $('msg').textContent='Your closest match:';$('out').append(card(d.matches[0],'top'));
+  const more=document.createElement('div');more.className='more';d.matches.slice(1).forEach(m=>more.append(card(m,'top')));$('out').append(more);
+ }catch(x){$('msg').textContent='Something went wrong. Check your connection and try again.'}};
+</script></body></html>
