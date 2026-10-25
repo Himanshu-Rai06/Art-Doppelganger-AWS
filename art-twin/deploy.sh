@@ -11,7 +11,8 @@ Z=https://github.com/opencv/opencv_zoo/raw/main/models
 rm -rf build function.zip && mkdir build
 pip install -q --target build --platform manylinux2014_x86_64 --only-binary=:all: --python-version 3.12 --implementation cp "opencv-python-headless==4.10.0.84" "numpy<2"
 find build -name tests -type d -prune -exec rm -rf {} + ; find build -name __pycache__ -type d -prune -exec rm -rf {} + ; find build -name "*.pyi" -delete; rm -rf build/numpy/f2py build/numpy/distutils build/bin
-cp lambda/* yunet.onnx sface.onnx embeddings.npy meta.json build/
+find lambda -maxdepth 1 -type f -exec cp {} build/ \;
+cp yunet.onnx sface.onnx embeddings.npy meta.json build/
 (cd build && zip -qr ../function.zip .)
 if ! aws iam get-role --role-name $ROLE >/dev/null 2>&1; then
   aws iam create-role --role-name $ROLE --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null
@@ -19,7 +20,7 @@ if ! aws iam get-role --role-name $ROLE >/dev/null 2>&1; then
   sleep 12
 fi
 B=art-twin-$ACC-tmp
-aws s3 mb s3://$B >/dev/null; aws s3 cp -q function.zip s3://$B/function.zip
+aws s3 mb s3://$B >/dev/null 2>&1 || true; aws s3 cp function.zip s3://$B/function.zip
 if aws lambda get-function --function-name $FN >/dev/null 2>&1; then
   aws lambda update-function-code --function-name $FN --s3-bucket $B --s3-key function.zip >/dev/null
 else
