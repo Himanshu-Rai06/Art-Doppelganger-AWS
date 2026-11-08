@@ -123,4 +123,4 @@ For the full manual walk-through (account safety, EC2, SSH, environment), see [d
 
 ## Author
 
-Himanshu Rai, B.Sc. Mathematics (Hons). Built for the course Introduction to Cloud Computing.[View the pdf](docs/Introduction to Cloud Computing.pdf)
+Himanshu Rai, B.Sc. Mathematics (Hons). Built for the course Introduction to Cloud Computing.[View the pdf](docs/Introduction_to_Cloud_Computing.pdf)
