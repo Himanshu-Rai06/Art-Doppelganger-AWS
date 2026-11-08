@@ -54,22 +54,51 @@ Why serverless: one short job per request, no idle cost, scales with visitors, a
 
 ## Repository structure
 
-```
-.
-├── README.md
-├── build_embeddings.py     # builds embeddings.npy and meta.json from the Met API
-├── deploy.sh               # packages and deploys to AWS Lambda
-├── teardown.sh             # removes the Lambda function and its role
-├── embeddings.npy          # 128-number vector per painting
-├── meta.json               # title, artist, date, image and museum links
-├── requirements.txt
+art-twin/
+│
 ├── lambda/
-│   ├── handler.py          # page + matching logic
-│   └── index.html          # web interface (upload or camera)
-└── docs/
-    ├── SETUP.md            # step-by-step manual setup on AWS
-    └── img/
-```
+│   ├── handler.py          # Lambda backend + matching logic
+│   └── index.html           # Web interface (upload or camera)
+│
+├── build_embeddings.py      # Builds embeddings.npy and meta.json from Met API
+├── deploy.sh                # Packages and deploys to AWS Lambda
+├── teardown.sh              # Removes Lambda function and its role
+│
+├── embeddings.npy            # 128-dimensional painting embeddings
+├── meta.json                 # Painting metadata
+├── requirements.txt
+│
+├── docs/
+│   ├── img/                  # Project screenshots and diagrams
+│   ├── Introduction_to_Cloud_Computing...  # Existing document
+│   └── SETUP.md              # Manual AWS setup instructions
+│
+├── .gitignore
+├── LICENSE
+└── README.md                 # Main project documentationart-twin/
+│
+├── lambda/
+│   ├── handler.py          # Lambda backend + matching logic
+│   └── index.html           # Web interface (upload or camera)
+│
+├── build_embeddings.py      # Builds embeddings.npy and meta.json from Met API
+├── deploy.sh                # Packages and deploys to AWS Lambda
+├── teardown.sh              # Removes Lambda function and its role
+│
+├── embeddings.npy            # 128-dimensional painting embeddings
+├── meta.json                 # Painting metadata
+├── requirements.txt
+│
+├── docs/
+│   ├── img/                  # Project screenshots and diagrams
+│   ├── Introduction_to_Cloud_Computing...  # Existing document
+│   └── SETUP.md              # Manual AWS setup instructions
+│
+├── .gitignore
+├── LICENSE
+└── README.md                 # Main project documentation
+
+
 
 ## Quick start (deploy your own copy)
 
