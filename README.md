@@ -7,9 +7,8 @@ Built on AWS with OpenCV face models. The photo is processed in memory and never
 ![Home page](docs/img/page_home.png)
 ![Result](docs/img/page_result.png)
 
-<p align="center">
-  ![Result](docs/img/page_result.png)"
-</p>
+<img src="docs/img/page_result.png" alt="Result" width="500">
+
 
 
 > The live demo is not kept online, to avoid cost and public abuse. You can deploy your own copy in about 4 minutes (see Quick start).
