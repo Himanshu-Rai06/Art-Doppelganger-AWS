@@ -1,0 +1,12 @@
+*.onnx
+*.pem
+.env
+venv/
+v/
+*-venv/
+build/
+function.zip
+deploy.log
+__pycache__/
+photos/
+.DS_Store
