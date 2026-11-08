@@ -4,11 +4,10 @@ Take a selfie and find the portrait paintings in The Metropolitan Museum of Art 
 
 Built on AWS with OpenCV face models. The photo is processed in memory and never stored.
 
-![Home page](docs/img/page_home.png)
-![Result](docs/img/page_result.png)
-
-<img src="docs/img/page_result.png" alt="Result" width="500">
-
+<p align="center">
+<img src="docs/img/page_home.png" alt="Home page" width="900">
+<img src="docs/img/page_result.png" alt="Result" width="900">
+</p>
 
 
 > The live demo is not kept online, to avoid cost and public abuse. You can deploy your own copy in about 4 minutes (see Quick start).
