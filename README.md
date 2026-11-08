@@ -8,7 +8,7 @@ Built on AWS with OpenCV face models. The photo is processed in memory and never
 ![Result](docs/img/page_result.png)
 
 <p align="center">
-  <img src=![Result](docs/img/page_result.png) />
+  <img src="![Result](docs/img/page_result.png)"/>
 </p>
 
 
